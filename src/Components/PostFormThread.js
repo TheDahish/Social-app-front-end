@@ -1,40 +1,53 @@
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import React from "react";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Dimmer, Form, Loader } from "semantic-ui-react";
 import { useForm } from "../util/hooks";
 
 import { FETCH_POST_QUERY } from "../util/graphql";
-export default function PostForm() {
+export default function PostFormThread({
+  threadPosts,
+  setThreadPosts,
+  threadID,
+}) {
   const { values, onChange, onSubmit } = useForm(createPostcallback, {
     body: "",
   });
-
-  const [createUserPost, { error }] = useMutation(CREATE_POST, {
-    variables: values,
+  // console.log(threadID);
+  const [createThreadPost, { loading, error }] = useMutation(CREATE_POST, {
+    variables: { body: values.body, threadID },
     update(proxy, result) {
       const data = proxy.readQuery({
-        query: FETCH_POST_QUERY,
+        query: FETCH_THREAD_POST_QUERY,
+        variables: { threadID: threadID },
       });
+      console.log(result.data.createThreadPost);
       proxy.writeQuery({
-        query: FETCH_POST_QUERY,
+        query: FETCH_THREAD_POST_QUERY,
+        variables: { threadID: threadID },
         data: {
-          getFollowedPosts: [
-            result.data.createUserPost,
-            ...data.getFollowedPosts,
+          getThreadPosts: [
+            result.data.createThreadPost,
+            ...data.getThreadPosts,
           ],
         },
       });
+      //  console.log(data);
+      threadPosts.push(result.data.createThreadPost);
+      setThreadPosts([...threadPosts]);
       values.body = "";
     },
   });
 
   function createPostcallback() {
-    createUserPost();
+    createThreadPost();
   }
 
   return (
     <>
+      <Dimmer active={loading} inverted>
+        <Loader inverted>Posting</Loader>
+      </Dimmer>
       <Form onSubmit={onSubmit}>
         <h1 style={{ marginLeft: "45px" }}>Create a Post</h1>
         <Form.Group>
@@ -65,8 +78,8 @@ export default function PostForm() {
 }
 
 const CREATE_POST = gql`
-  mutation createPost($body: String!) {
-    createUserPost(body: $body) {
+  mutation createThreadPost($threadID: ID!, $body: String!) {
+    createThreadPost(threadID: $threadID, body: $body) {
       threadName
       _id
       body
@@ -85,6 +98,40 @@ const CREATE_POST = gql`
         createdAt
       }
       commentCount
+    }
+  }
+`;
+
+const FETCH_THREAD_POST_QUERY = gql`
+  query($threadID: ID!) {
+    getThreadPosts(threadID: $threadID) {
+      _id
+      body
+      createdAt
+      username
+      likeCount
+      likes {
+        username
+      }
+      commentCount
+      comments {
+        _id
+        username
+        createdAt
+        body
+      }
+    }
+  }
+`;
+
+const FETCH_THREADS = gql`
+  query($threadID: ID!) {
+    getThread(threadID: $threadID) {
+      name
+      creatorUsername
+      posts {
+        postID
+      }
     }
   }
 `;

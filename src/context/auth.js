@@ -1,5 +1,7 @@
 import React, { createContext, useReducer } from "react";
 import jwtDecode from "jwt-decode";
+import gql from "graphql-tag";
+import { useQuery } from "@apollo/react-hooks";
 
 const initialState = {
   user: null,
@@ -9,6 +11,7 @@ if (localStorage.getItem("jwtToken")) {
   if (token.exp * 1000 < Date.now()) {
     localStorage.removeItem("jwtToken");
   } else {
+    console.log(token);
     initialState.user = token;
   }
 }
@@ -41,6 +44,7 @@ function AuthProvider(props) {
 
   function login(user) {
     localStorage.setItem("jwtToken", user.token);
+    // console.log(user);
     dispatch({
       type: "LOGIN",
       payload: user,
@@ -53,6 +57,7 @@ function AuthProvider(props) {
       type: "LOGOUT",
     });
   }
+
   return (
     <AuthContext.Provider
       value={{ user: state.user, login, logout }}
@@ -62,3 +67,25 @@ function AuthProvider(props) {
 }
 
 export { AuthContext, AuthProvider };
+
+const FETCH_USER = gql`
+  query($userID: ID!) {
+    getUser(userID: $userID) {
+      posts {
+        postID
+      }
+      followedThreads {
+        threadID
+      }
+      followedUsers {
+        userID
+      }
+      name
+      email
+      username
+      createdAt
+      token
+      id
+    }
+  }
+`;

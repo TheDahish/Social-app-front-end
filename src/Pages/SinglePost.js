@@ -64,7 +64,7 @@ export default function SinglePost(props) {
             <Image
               floated="right"
               size="small"
-              src="https://react.semantic-ui.com/images/avatar/large/molly.png"
+              src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
             />
           </Grid.Column>
           <Grid.Column width={10}>

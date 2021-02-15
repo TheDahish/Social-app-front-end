@@ -11,23 +11,32 @@ export default function DeleteButton({
   commentid,
   callback,
 }) {
+  console.log("fdelete");
   const [confirmOpen, setConfirmOpen] = useState(false);
   const mutation = commentid ? DELETE_COMMENT : DELETE_POST;
+  console.log(threadID);
   const [deletePostorComment] = useMutation(mutation, {
     update(proxy) {
       setConfirmOpen(false);
       if (!commentid) {
         const data = proxy.readQuery({
-          query: FETCH_POST_QUERY,
+          query: FETCH_THREAD_POST_QUERY,
+          variables: {
+            threadID: threadID,
+          },
         });
-        data.getFollowedPosts = data.getFollowedPosts.filter(
+        console.log(data);
+        data.getThreadPosts = data.getThreadPosts.filter(
           (p) => p._id !== postid
         );
-        const test = cloneDeep(data.getFollowedPosts);
+        const test = cloneDeep(data.getThreadPosts);
         proxy.writeQuery({
-          query: FETCH_POST_QUERY,
+          query: FETCH_THREAD_POST_QUERY,
+          variables: {
+            threadID: threadID,
+          },
           data: {
-            getFollowedPosts: test,
+            getThreadPosts: test,
           },
         });
         deletePost2(postid);

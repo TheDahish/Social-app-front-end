@@ -17,6 +17,7 @@ export default function Login(props) {
     update(_, result) {
       context.login(result.data.login);
       props.history.push("/");
+      window.location.reload(false);
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -72,10 +73,21 @@ export default function Login(props) {
 const LOGIN_USER = gql`
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
+      posts {
+        postID
+      }
+      followedThreads {
+        threadID
+      }
+      followedUsers {
+        userID
+      }
+      name
       email
       username
       createdAt
       token
+      id
     }
   }
 `;

@@ -4,11 +4,12 @@ import { AuthContext } from "../context/auth";
 export default function AuthRoute({ component: Component, ...rest }) {
   const { user } = useContext(AuthContext);
 
+  console.log(user);
   return (
     <Route
       {...rest}
       render={(props) =>
-        user ? <Redirect to="/" /> : <Component {...props} />
+        !user ? <Redirect to="/" /> : <Component {...props} />
       }
     />
   );

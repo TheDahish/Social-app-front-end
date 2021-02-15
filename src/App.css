@@ -4,6 +4,15 @@
   font-size: 2rem;
   margin-top: 10px;
 }
+.thread {
+  width: 499px;
+  display: flex;
+  justify-content: center;
+  /* left: 50%; */
+  /* right: 67%; */
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .formContainer {
   width: 400px;
@@ -13,4 +22,29 @@
 .ui.teal.button:focus,
 .ui.teal.buttons .button:focus {
   background-color: #00b5ad !important;
+}
+i.icon, i.icons{
+  margin:auto !important;
+  width: auto !important;
+}
+.ui.card:last-child{
+  margin-bottom: 30px !important; 
+}
+/* .ui.segment{
+  
+  position: relative ;
+  background: #fff;
+  box-shadow: 0 0px 0px 0 rgb(34 36 38 / 15%) !important;
+  margin: 1rem 0;
+  padding: 1em 1em;
+  border-radius: .28571429rem;
+  border: 1px solid rgba(34,36,38,.15);
+  border-bottom: none !important;
+} */
+
+.threadbtn i{
+  margin-left: 7px !important;
+}
+.ui.form .field .ui.input input, .ui.form .fields .field .ui.input input {
+  margin-left: 20px;
 }
