@@ -1,6 +1,6 @@
 import { gql, useMutation } from "@apollo/react-hooks";
 import React, { useState } from "react";
-import { Button, Form, Header, Image, Modal } from "semantic-ui-react";
+import { Button, Form, Modal } from "semantic-ui-react";
 
 export default function CreateThread({
   edit,
@@ -23,7 +23,7 @@ export default function CreateThread({
       const data = proxy.readQuery({
         query: FETCH_THREADS,
       });
-      console.log(data.getThreads, result.data.createThread);
+      // console.log(data.getThreads, result.data.createThread);
       data.getThreads = data.getThreads.push({
         posts: [],
         thread: result.data.createThread,

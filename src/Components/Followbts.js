@@ -10,7 +10,7 @@ export default function Followbts({ threadID, id }) {
   //console.log(user);
   //let { myUser, setMyUser } = useState({ id: 123 });
   const [followed, setFollowed] = useState(false);
-  const { loading, data } = useQuery(FETCH_USER, {
+  const { data } = useQuery(FETCH_USER, {
     variables: { userID: user.id },
   });
   if (data) {
@@ -26,7 +26,7 @@ export default function Followbts({ threadID, id }) {
 
   useEffect(() => {
     if (threadID && user.followedThreads) {
-      console.log("thread dollow");
+      // console.log("thread dollow");
       if (user.followedThreads.find((u) => u.threadID === threadID)) {
         setFollowed(true);
       } else {
@@ -40,7 +40,7 @@ export default function Followbts({ threadID, id }) {
     } else {
       setFollowed(false);
     }
-  }, [user]);
+  }, [user, id, threadID]);
 
   const [follow] = useMutation(FOLLOW_USER, {
     variables: { userID: id },

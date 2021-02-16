@@ -1,8 +1,7 @@
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import React, { useContext, useState } from "react";
-import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
-import Followbts from "../Components/Followbts";
+import { Button, Form, Header, Image, Segment } from "semantic-ui-react";
 import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
 
@@ -33,7 +32,7 @@ export default function Profile(props) {
   });
 
   function registerUser() {
-    console.log("test");
+    // console.log("test");
     editProfile();
   }
   return (

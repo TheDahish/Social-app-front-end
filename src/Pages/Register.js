@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { Button, Container, Form } from "semantic-ui-react";
 import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
@@ -20,6 +21,7 @@ export default function Register(props) {
     update(_, result) {
       context.login(result.data.register);
       props.history.push("/");
+      window.location.reload(false);
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -87,7 +89,9 @@ export default function Register(props) {
           <Button type="submit" primary>
             Register
           </Button>
+          Already a User?<Link to="/login"> Login</Link>
         </Form>
+
         {Object.keys(errors).length > 0 && (
           <div className="ui error message">
             <ul className="list">

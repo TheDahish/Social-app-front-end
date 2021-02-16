@@ -3,7 +3,6 @@ import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import React, { useState } from "react";
 import { Button, Confirm, Icon, Popup } from "semantic-ui-react";
-import { FETCH_POST_QUERY } from "../util/graphql";
 export default function DeleteButton({
   threadID,
   deletePost2,
@@ -11,10 +10,10 @@ export default function DeleteButton({
   commentid,
   callback,
 }) {
-  console.log("fdelete");
+  //console.log("fdelete");
   const [confirmOpen, setConfirmOpen] = useState(false);
   const mutation = commentid ? DELETE_COMMENT : DELETE_POST;
-  console.log(threadID);
+  //console.log(threadID);
   const [deletePostorComment] = useMutation(mutation, {
     update(proxy) {
       setConfirmOpen(false);
@@ -25,7 +24,7 @@ export default function DeleteButton({
             threadID: threadID,
           },
         });
-        console.log(data);
+        //  console.log(data);
         data.getThreadPosts = data.getThreadPosts.filter(
           (p) => p._id !== postid
         );

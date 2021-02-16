@@ -1,9 +1,8 @@
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import React from "react";
-import { Link } from "react-router-dom";
-import { Button, Container, Grid, Icon, Transition } from "semantic-ui-react";
-import Followbts from "../Components/Followbts";
+import { Container, Grid, Icon, Transition } from "semantic-ui-react";
+
 import PostCard from "../Components/PostCard";
 import UserCard from "../Components/UserCard";
 
@@ -20,7 +19,7 @@ export default function SingleUser(props) {
   var posts = [];
   if (data) {
     posts = data.getUserPosts;
-    console.log(posts);
+    //  console.log(posts);
   }
 
   return (

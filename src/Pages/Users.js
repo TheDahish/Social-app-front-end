@@ -10,17 +10,17 @@ export default function Users() {
   const { loading, data } = useQuery(FETCH_USERS);
   var users = [];
   if (data) {
-    console.log(user);
+    // console.log(user);
     users = data.getUsers;
     if (user) users = users.filter((u) => u.id !== user.id);
     //console.log(users, user);
   }
   return (
-    <div>
+    <div style={{ marginTop: "20px" }}>
       <Dimmer active={loading} inverted>
         <Loader inverted>Loading</Loader>
       </Dimmer>
-      <Grid columns={3}>
+      <Grid relaxed stackable columns={3}>
         <Grid.Row className="title">
           <h1>Users</h1>
         </Grid.Row>

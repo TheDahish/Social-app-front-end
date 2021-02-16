@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { Button, Form } from "semantic-ui-react";
 import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
@@ -42,7 +43,6 @@ export default function Login(props) {
           type="text"
           error={errors.username ? true : false}
         />
-
         <Form.Input
           error={errors.password ? true : false}
           type="password"
@@ -52,10 +52,10 @@ export default function Login(props) {
           value={values.password}
           onChange={onChange}
         />
-
         <Button type="submit" primary>
           Login
         </Button>
+        Not a User?<Link to="/register"> SignUp</Link>
       </Form>
       {Object.keys(errors).length > 0 && (
         <div className="ui error message">

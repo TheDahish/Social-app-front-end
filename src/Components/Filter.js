@@ -1,7 +1,7 @@
 import React from "react";
 //import faker from "faker";
 //import _ from "lodash";
-import { Button, Dropdown, Icon, Label, Segment } from "semantic-ui-react";
+import { Dropdown, Icon, Segment } from "semantic-ui-react";
 const DropdownExampleDivider = ({
   filter,
   setFilter,
@@ -21,7 +21,7 @@ const DropdownExampleDivider = ({
     }
   }
   return (
-    <Segment floated="left" textAlign="left" style={{ minWidth: "460px" }}>
+    <Segment floated="left" textAlign="left" className="filter">
       <Dropdown
         loading={loading}
         text="Filter"
@@ -53,6 +53,7 @@ const DropdownExampleDivider = ({
       </Dropdown>
       {filter.map((f) => (
         <button
+          style={{ marginTop: "5px" }}
           onClick={() => {
             filter = filter.filter((e) => e !== f);
             setFilter([...filter]);

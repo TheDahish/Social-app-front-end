@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, Icon, Image } from "semantic-ui-react";
+import { Card, Icon, Image } from "semantic-ui-react";
 import { AuthContext } from "../context/auth";
 import Followbts from "./Followbts";
 export default function UserCard({ name, id, posts, createdAt }) {
@@ -15,7 +15,7 @@ export default function UserCard({ name, id, posts, createdAt }) {
             state: {
               name,
               id,
-              posts,
+
               createdAt,
               posts,
             },

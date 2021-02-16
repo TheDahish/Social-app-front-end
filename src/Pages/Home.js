@@ -57,16 +57,16 @@ export default function Home(props) {
   let { loading: loading2, data } = useQuery(FETCH_POST_QUERY);
   // const { loading3, threadPosts } = useQuery(FETCH_THREAD_POST_QUERY);
   if (data) {
-    console.log(data);
+    // console.log(data);
     posts = data.getFollowedPosts;
-    console.log(posts);
+    //console.log(posts);
     posts.sort(compare);
   }
 
   function deletePost(id) {
     posts = posts.filter((p) => p._id !== id);
     setPosts([...posts]);
-    console.log(posts);
+    // console.log(posts);
   }
 
   useEffect(() => {
@@ -74,15 +74,15 @@ export default function Home(props) {
     if (!user) {
       setPosts([]);
     }
-    console.log(posts);
+    //   console.log(posts);
   }, [user]);
 
-  console.log(filter);
+  // console.log(filter);
   return (
     <div>
       {user ? (
         <>
-          <div
+          {/* <div
             style={{
               display: "flex",
               justifyContent: "space-around",
@@ -96,9 +96,21 @@ export default function Home(props) {
               loading={loading2}
               threads={posts}
             />
-          </div>
-          <Grid columns={3}>
-            <Grid.Row centered></Grid.Row>
+          </div> */}
+          <Grid columns={3} relaxed stackable>
+            <Grid.Row className="title" verticalAlign="bottom" columns="2">
+              <Grid.Column>
+                <PostForm />
+              </Grid.Column>
+              <Grid.Column>
+                <Filter
+                  filter={filter}
+                  setFilter={setFilter}
+                  loading={loading2}
+                  threads={posts}
+                />
+              </Grid.Column>
+            </Grid.Row>
             <Grid.Row className="title">
               <h1 style={{ display: "flex", justifyContent: "space-around" }}>
                 Timeline{" "}

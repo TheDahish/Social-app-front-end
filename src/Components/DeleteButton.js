@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import { Button, Confirm, Icon, Popup } from "semantic-ui-react";
 import { FETCH_POST_QUERY } from "../util/graphql";
 export default function DeleteButton({
-  threadID,
   deletePost2,
   postid,
   commentid,
@@ -83,28 +82,6 @@ const DELETE_COMMENT = gql`
         body
       }
       commentCount
-    }
-  }
-`;
-
-const FETCH_THREAD_POST_QUERY = gql`
-  query($threadID: ID!) {
-    getThreadPosts(threadID: $threadID) {
-      _id
-      body
-      createdAt
-      username
-      likeCount
-      likes {
-        username
-      }
-      commentCount
-      comments {
-        _id
-        username
-        createdAt
-        body
-      }
     }
   }
 `;

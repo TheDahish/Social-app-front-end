@@ -2,7 +2,7 @@
   display: block !important;
   text-align: center;
   font-size: 2rem;
-  margin-top: 10px;
+  margin-top: 60px;
 }
 .thread {
   width: 499px;
@@ -47,4 +47,13 @@ i.icon, i.icons{
 }
 .ui.form .field .ui.input input, .ui.form .fields .field .ui.input input {
   margin-left: 20px;
+}
+
+@media screen and (max-width: 767px) {
+  .ui.vertical.divider{
+    display: none;
+  }
+.filter{
+  max-width: 200px !important;
+}
 }

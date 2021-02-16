@@ -3,7 +3,6 @@ import {
   Card,
   Icon,
   Label,
-  Image,
   Button,
   Popup,
   Modal,
@@ -101,9 +100,8 @@ export default function PostCard({
                 height: "100%",
               }}
               readOnly
-            >
-              {body}
-            </TextArea>{" "}
+              value={body}
+            />
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
@@ -122,7 +120,7 @@ export default function PostCard({
               </Button>
             }
           />
-          {console.log(threadCreator)}
+
           {user &&
             (user.username === username || user.username === threadCreator) &&
             (threadID ? (

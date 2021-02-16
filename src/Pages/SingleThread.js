@@ -55,16 +55,16 @@ export default function SingleThread(props) {
   if (data) {
     threadPosts = data.getThreadPosts;
     threadPosts.sort(compare);
-    console.log(threadPosts);
+    // console.log(threadPosts);
   }
   if (data2) {
     thread = data2.getThread;
-    console.log(thread);
+    // console.log(thread);
   }
   function deletePost(postID) {
-    threadPosts = threadPosts.filter((p) => p._id != postID);
+    threadPosts = threadPosts.filter((p) => p._id !== postID);
     setThreadPosts([...threadPosts]);
-    console.log(threadPosts);
+    //  console.log(threadPosts);
     //window.location.reload(false);
   }
 
@@ -140,7 +140,6 @@ export default function SingleThread(props) {
                             key={post.id}
                             // style={{ marginBottom: 20, width: "25%" }}
                           >
-                            {console.log(thread.creatorUsername)}
                             <PostCard
                               threadID={thread._id}
                               threadCreator={thread.creatorUsername}

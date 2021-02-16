@@ -4,7 +4,6 @@ import React from "react";
 import { Button, Dimmer, Form, Loader } from "semantic-ui-react";
 import { useForm } from "../util/hooks";
 
-import { FETCH_POST_QUERY } from "../util/graphql";
 export default function PostFormThread({
   threadPosts,
   setThreadPosts,
@@ -21,7 +20,7 @@ export default function PostFormThread({
         query: FETCH_THREAD_POST_QUERY,
         variables: { threadID: threadID },
       });
-      console.log(result.data.createThreadPost);
+      // console.log(result.data.createThreadPost);
       proxy.writeQuery({
         query: FETCH_THREAD_POST_QUERY,
         variables: { threadID: threadID },
@@ -119,18 +118,6 @@ const FETCH_THREAD_POST_QUERY = gql`
         username
         createdAt
         body
-      }
-    }
-  }
-`;
-
-const FETCH_THREADS = gql`
-  query($threadID: ID!) {
-    getThread(threadID: $threadID) {
-      name
-      creatorUsername
-      posts {
-        postID
       }
     }
   }
