@@ -42,6 +42,10 @@ export default function SingleThread(props) {
   });
 
   const [deleteThread] = useMutation(DELETE_THREAD, {
+    update() {
+      window.location.reload(false);
+      props.history.push("/threads");
+    },
     variables: {
       threadID: threadID,
     },
@@ -49,8 +53,6 @@ export default function SingleThread(props) {
 
   function handleDelete() {
     deleteThread();
-    props.history.push("/threads");
-    window.location.reload(false);
   }
 
   if (data) {
