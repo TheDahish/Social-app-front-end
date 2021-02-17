@@ -69,7 +69,7 @@ export default function Threads() {
           <Grid relaxed stackable celled columns="equal">
             <Grid.Column>
               <Grid columns="1">
-                <div style={{ overflow: "scroll", maxHeight: "600px" }}>
+                <div style={{ overflow: "auto", maxHeight: "600px" }}>
                   <h4 style={{ textAlign: "center" }}>Threads</h4>
                   {loading
                     ? ""
