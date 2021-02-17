@@ -1,4 +1,5 @@
 import { useMutation } from "@apollo/client";
+import { motion } from "framer-motion";
 import gql from "graphql-tag";
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
@@ -29,9 +30,39 @@ export default function Login(props) {
   function loginUserCallback() {
     loginUser();
   }
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      x: "-100vw",
+      scale: 0.8,
+    },
+    in: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+    },
+    out: {
+      opacity: 0,
+      x: "100vw",
+      scale: 1.2,
+    },
+  };
+  const pageTransition = {
+    type: "tween",
+    ease: "anticipate",
+    duration: 1,
+  };
 
   return (
-    <div className="formContainer">
+    <motion.div
+      initial="initial"
+      animate="in"
+      variants={pageVariants}
+      transition={pageTransition}
+      exit="out"
+      className="formContainer"
+      style={{ position: "absolute", left: "31%" }}
+    >
       <Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ""}>
         <h1>Login</h1>
         <Form.Input
@@ -66,7 +97,7 @@ export default function Login(props) {
           </ul>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 

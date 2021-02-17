@@ -5,6 +5,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { createHttpLink } from "apollo-link-http";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { setContext } from "apollo-link-context";
+import { BrowserRouter } from "react-router-dom";
 const httpLink = createHttpLink({
   uri: "https://secure-island-74383.herokuapp.com/",
 });
@@ -24,6 +25,8 @@ const client = new ApolloClient({
 
 export default (
   <ApolloProvider client={client}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </ApolloProvider>
 );

@@ -1,4 +1,5 @@
 import { gql, useMutation, useQuery } from "@apollo/react-hooks";
+import { motion } from "framer-motion";
 import React, { useContext, useState } from "react";
 import {
   Button,
@@ -67,7 +68,28 @@ export default function SingleThread(props) {
     //  console.log(threadPosts);
     //window.location.reload(false);
   }
-
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      x: "-100vw",
+      scale: 0.8,
+    },
+    in: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+    },
+    out: {
+      opacity: 0,
+      x: "100vw",
+      scale: 1.2,
+    },
+  };
+  const pageTransition = {
+    type: "tween",
+    ease: "anticipate",
+    duration: 1,
+  };
   return (
     <>
       <Dimmer active={loading} inverted>
@@ -76,7 +98,15 @@ export default function SingleThread(props) {
       {loading && loading2 ? (
         ""
       ) : (
-        <div style={{ display: "flex" }}>
+        <motion.div
+          initial="initial"
+          animate="in"
+          variants={pageVariants}
+          transition={pageTransition}
+          exit="out"
+          className="formContainer"
+          style={{ position: "absolute", width: "100%", display: "flex" }}
+        >
           <Card style={{ height: "100%", margin: "20px" }}>
             <Card.Content header={thread.name} />
             <Card.Content
@@ -154,7 +184,7 @@ export default function SingleThread(props) {
               </div>
             </>
           </Segment>
-        </div>
+        </motion.div>
       )}
     </>
   );

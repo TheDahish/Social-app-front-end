@@ -1,4 +1,5 @@
 import { useMutation } from "@apollo/react-hooks";
+import { motion } from "framer-motion";
 import gql from "graphql-tag";
 import React, { useContext, useState } from "react";
 import { Button, Form, Header, Image, Segment } from "semantic-ui-react";
@@ -35,8 +36,45 @@ export default function Profile(props) {
     // console.log("test");
     editProfile();
   }
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      x: "-100vw",
+      scale: 0.8,
+    },
+    in: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+    },
+    out: {
+      opacity: 0,
+      x: "100vw",
+      scale: 1.2,
+    },
+  };
+  const pageTransition = {
+    type: "tween",
+    ease: "anticipate",
+    duration: 1,
+  };
+
   return (
-    <div style={{ maxWidth: 720, margin: "auto" }}>
+    <motion.div
+      initial="initial"
+      animate="in"
+      variants={pageVariants}
+      transition={pageTransition}
+      exit="out"
+      className="formContainer"
+      style={{
+        position: "absolute",
+        width: "100%",
+        maxWidth: 720,
+        margin: "auto",
+        left: "17%",
+      }}
+    >
       <Segment textAlign="center">
         <Form
           style={{ maxWidth: 520, margin: "auto" }}
@@ -132,7 +170,7 @@ export default function Profile(props) {
           </div>
         </Form>
       </Segment>
-    </div>
+    </motion.div>
   );
 }
 

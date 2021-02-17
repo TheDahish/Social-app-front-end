@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/react-hooks";
+import { motion } from "framer-motion";
 import gql from "graphql-tag";
 import React from "react";
 import { Container, Grid, Icon, Transition } from "semantic-ui-react";
@@ -21,9 +22,39 @@ export default function SingleUser(props) {
     posts = data.getUserPosts;
     //  console.log(posts);
   }
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      x: "-100vw",
+      scale: 0.8,
+    },
+    in: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+    },
+    out: {
+      opacity: 0,
+      x: "100vw",
+      scale: 1.2,
+    },
+  };
+  const pageTransition = {
+    type: "tween",
+    ease: "anticipate",
+    duration: 1,
+  };
 
   return (
-    <div>
+    <motion.div
+      initial="initial"
+      animate="in"
+      variants={pageVariants}
+      transition={pageTransition}
+      exit="out"
+      className="formContainer"
+      style={{ position: "absolute", width: "100%" }}
+    >
       <Icon
         link
         size="big"
@@ -64,7 +95,7 @@ export default function SingleUser(props) {
           </Grid.Row>
         </Grid>
       </Container>
-    </div>
+    </motion.div>
   );
 }
 

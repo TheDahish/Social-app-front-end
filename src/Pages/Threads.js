@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/react-hooks";
+import { motion } from "framer-motion";
 import gql from "graphql-tag";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -27,8 +28,39 @@ export default function Threads() {
     //threads = threads.filter((u) => u.id !== user.id);
     //console.log(users, user);
   }
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      x: "-100vw",
+      scale: 0.8,
+    },
+    in: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+    },
+    out: {
+      opacity: 0,
+      x: "100vw",
+      scale: 1.2,
+    },
+  };
+  const pageTransition = {
+    type: "tween",
+    ease: "anticipate",
+    duration: 1,
+  };
+
   return (
-    <>
+    <motion.div
+      initial="initial"
+      animate="in"
+      variants={pageVariants}
+      transition={pageTransition}
+      exit="out"
+      className="formContainer"
+      style={{ position: "absolute", width: "100%" }}
+    >
       <Dimmer active={loading} inverted>
         <Loader inverted>Loading</Loader>
       </Dimmer>
@@ -121,7 +153,7 @@ export default function Threads() {
       </div>
 
       <CreateThread createOn={createOn} setCreateOn={setCreateOn} />
-    </>
+    </motion.div>
   );
 }
 

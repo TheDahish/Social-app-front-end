@@ -15,6 +15,7 @@ import {
 import moment from "moment";
 import { LikeButton } from "../Components/likebtn";
 import DeleteButton from "../Components/DeleteButton";
+import { motion } from "framer-motion";
 
 export default function SinglePost(props) {
   const postid = props.match.params.postId;
@@ -43,9 +44,31 @@ export default function SinglePost(props) {
   function deletepostcallback() {
     props.history.push("/");
   }
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      x: "-100vw",
+      scale: 0.8,
+    },
+    in: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+    },
+    out: {
+      opacity: 0,
+      x: "100vw",
+      scale: 1.2,
+    },
+  };
+  const pageTransition = {
+    type: "tween",
+    ease: "anticipate",
+    duration: 1,
+  };
   let postMarkup;
   if (!getPost) {
-    postMarkup = <h1>Loading </h1>;
+    postMarkup = <h1> </h1>;
   } else {
     const {
       _id,
@@ -58,86 +81,98 @@ export default function SinglePost(props) {
       commentCount,
     } = getPost;
     postMarkup = (
-      <Grid>
-        <Grid.Row>
-          <Grid.Column width={2}>
-            <Image
-              floated="right"
-              size="small"
-              src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
-            />
-          </Grid.Column>
-          <Grid.Column width={10}>
-            <Card fluid>
-              <Card.Content>
-                <Card.Header>{username}</Card.Header>
-                <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
-                <Card.Description>{body}</Card.Description>
-              </Card.Content>
-              <hr />
-              <Card.Content extra>
-                <LikeButton user={user} post={{ _id, likeCount, likes }} />
-                <Popup
-                  content="Comment on Post"
-                  inverted
-                  trigger={
-                    <Button as="div" labelPosition="right">
-                      <Button basic color="blue">
-                        <Icon name="comments" />
-                      </Button>
-                      <Label basic color="blue" pointing="left">
-                        {commentCount}
-                      </Label>
-                    </Button>
-                  }
-                />
-                {user && user.username === username && (
-                  <DeleteButton postid={_id} callback={deletepostcallback} />
-                )}
-              </Card.Content>
-            </Card>
-            {user && (
+      <motion.div
+        initial="initial"
+        animate="in"
+        variants={pageVariants}
+        transition={pageTransition}
+        exit="out"
+        className="formContainer"
+        style={{ position: "absolute", width: "100%" }}
+      >
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={2}>
+              <Image
+                floated="right"
+                size="small"
+                src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
+              />
+            </Grid.Column>
+            <Grid.Column width={10}>
               <Card fluid>
                 <Card.Content>
-                  <p>Post a Comment</p>
-                  <Form>
-                    <div className="ui action input fluid">
-                      <input
-                        ref={commentInputRef}
-                        type="text"
-                        placeholder="Comment.."
-                        name="comment"
-                        value={comment}
-                        onChange={(event) => setComment(event.target.value)}
-                      />
-                      <button
-                        type="submit"
-                        className="ui button teal"
-                        disabled={comment.trim() === ""}
-                        onClick={createComment}
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </Form>
+                  <Card.Header>{username}</Card.Header>
+                  <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
+                  <Card.Description>{body}</Card.Description>
                 </Card.Content>
-              </Card>
-            )}
-            {comments.map((comment) => (
-              <Card fluid key={comment._id}>
-                <Card.Content>
-                  {user && user.username === comment.username && (
-                    <DeleteButton postid={_id} commentid={comment._id} />
+                <hr />
+                <Card.Content extra>
+                  <LikeButton user={user} post={{ _id, likeCount, likes }} />
+                  <Popup
+                    content="Comment on Post"
+                    inverted
+                    trigger={
+                      <Button as="div" labelPosition="right">
+                        <Button basic color="blue">
+                          <Icon name="comments" />
+                        </Button>
+                        <Label basic color="blue" pointing="left">
+                          {commentCount}
+                        </Label>
+                      </Button>
+                    }
+                  />
+                  {user && user.username === username && (
+                    <DeleteButton postid={_id} callback={deletepostcallback} />
                   )}
-                  <Card.Header>{comment.username}</Card.Header>
-                  <Card.Meta>{moment(comment.createdAt).fromNow()}</Card.Meta>
-                  <Card.Description>{comment.body}</Card.Description>
                 </Card.Content>
               </Card>
-            ))}
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+              {user && (
+                <Card fluid>
+                  <Card.Content>
+                    <p>Post a Comment</p>
+                    <Form>
+                      <div className="ui action input fluid">
+                        <input
+                          ref={commentInputRef}
+                          type="text"
+                          placeholder="Comment.."
+                          name="comment"
+                          value={comment}
+                          onChange={(event) => setComment(event.target.value)}
+                        />
+                        <button
+                          type="submit"
+                          className="ui button teal"
+                          disabled={comment.trim() === ""}
+                          onClick={createComment}
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </Form>
+                  </Card.Content>
+                </Card>
+              )}
+              {comments.map((comment) => (
+                <Card fluid key={comment._id}>
+                  <Card.Content>
+                    {user &&
+                      (user.username === comment.username ||
+                        user.username === username) && (
+                        <DeleteButton postid={_id} commentid={comment._id} />
+                      )}
+                    <Card.Header>{comment.username}</Card.Header>
+                    <Card.Meta>{moment(comment.createdAt).fromNow()}</Card.Meta>
+                    <Card.Description>{comment.body}</Card.Description>
+                  </Card.Content>
+                </Card>
+              ))}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </motion.div>
     );
   }
   return postMarkup;

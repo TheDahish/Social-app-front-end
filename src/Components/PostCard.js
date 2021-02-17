@@ -38,6 +38,9 @@ export default function PostCard({
   const [newbody, setBody] = useState(body);
   const [editOn, setEditOn] = useState(false);
   const [editPost] = useMutation(EDIT_POST, {
+    update() {
+      window.location.reload(false);
+    },
     variables: {
       body: newbody,
       postID: _id,
@@ -47,7 +50,6 @@ export default function PostCard({
   function handleEdit() {
     //console.log(newbody);
     editPost();
-    window.location.reload(false);
   }
   return (
     <>

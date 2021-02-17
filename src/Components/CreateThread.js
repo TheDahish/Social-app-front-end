@@ -11,6 +11,9 @@ export default function CreateThread({
   const [tname, setTname] = useState("");
 
   const [editThread] = useMutation(EDIT_THREAD, {
+    update() {
+      window.location.reload(false);
+    },
     variables: {
       name: tname,
       threadID: threadID ? threadID : "",
@@ -36,6 +39,7 @@ export default function CreateThread({
         },
       });
       setTname("");
+      window.location.reload(false);
     },
   });
 
@@ -47,7 +51,6 @@ export default function CreateThread({
         createThread();
       }
       setOpen(false);
-      window.location.reload(false);
     } else {
       alert("name must not be empty");
     }

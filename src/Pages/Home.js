@@ -17,6 +17,7 @@ import PostForm from "../Components/PostForm";
 import { Link } from "react-router-dom";
 import { useForm } from "../util/hooks";
 import Filter from "../Components/Filter";
+import { motion } from "framer-motion";
 function compare(a, b) {
   if (a.createdAt < b.createdAt) {
     return 1;
@@ -59,7 +60,7 @@ export default function Home(props) {
   if (data) {
     // console.log(data);
     posts = data.getFollowedPosts;
-    //console.log(posts);
+    console.log(posts);
     posts.sort(compare);
   }
 
@@ -76,10 +77,38 @@ export default function Home(props) {
     }
     //   console.log(posts);
   }, [user]);
-
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      x: "-100vw",
+      scale: 0.8,
+    },
+    in: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+    },
+    out: {
+      opacity: 0,
+      x: "100vw",
+      scale: 1.2,
+    },
+  };
+  const pageTransition = {
+    type: "tween",
+    ease: "anticipate",
+    duration: 1,
+  };
   // console.log(filter);
   return (
-    <div>
+    <motion.div
+      initial="initial"
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      transition={pageTransition}
+      style={{ position: "absolute", width: "100%" }}
+    >
       {user ? (
         <>
           {/* <div
@@ -214,7 +243,7 @@ export default function Home(props) {
           <Divider vertical>Or</Divider>
         </Segment>
       )}
-    </div>
+    </motion.div>
   );
 }
 
