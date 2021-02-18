@@ -100,6 +100,11 @@ export default function PostCard({
                 resize: "none",
                 width: "100%",
                 height: "100%",
+                border: "none",
+                overFlow: "auto",
+                outline: "none",
+
+                boxShadow: "none",
               }}
               readOnly
               value={body}

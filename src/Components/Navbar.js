@@ -6,6 +6,8 @@ export default function Navbar(props) {
   const { user, logout } = useContext(AuthContext);
   const size = useWindowSize();
   const pathname = window.location.pathname;
+
+  // console.log(path);
   const path =
     pathname === "/"
       ? !user
@@ -15,7 +17,10 @@ export default function Navbar(props) {
       ? "Users"
       : pathname.substr(1) === "threads"
       ? "Threads"
+      : pathname.substr(1) === "register"
+      ? "register"
       : pathname.substr(1);
+
   // console.log(path);
   const handleItemClick = (e, { name }) => setActiveItem(name);
   const [activeItem, setActiveItem] = useState(path);
@@ -35,88 +40,105 @@ export default function Navbar(props) {
   useEffect(() => {
     window.addEventListener("scroll", changeNav);
   }, []);
-  const navBar =
-    size.width > 700 ? (
-      user ? (
-        <>
-          <Menu style={{}} pointing secondary size="massive" color="teal">
+
+  useEffect(() => {
+    setActiveItem(
+      pathname === "/"
+        ? !user
+          ? "home"
+          : user.name
+        : pathname.substr(1) === "users"
+        ? "Users"
+        : pathname.substr(1) === "threads"
+        ? "Threads"
+        : pathname.substr(1) === "register"
+        ? "register"
+        : pathname.substr(1)
+    );
+    //console.log("changed");
+    // window.location.reload(false);
+  }, [pathname]);
+
+  return (
+    <>
+      {size.width > 700 ? (
+        user ? (
+          <>
+            <Menu style={{}} pointing secondary size="massive" color="teal">
+              <Menu.Item
+                onClick={handleItemClick}
+                name={user.name}
+                active={activeItem === user.name}
+                as={Link}
+                to="/"
+              />
+              {/* <Menu.Item name="Users" as={Link} to="/users" /> */}
+
+              <Menu.Menu position="right">
+                <Menu.Item
+                  name="Users"
+                  onClick={handleItemClick}
+                  active={activeItem === "Users"}
+                  as={Link}
+                  to="/users"
+                />
+                <Menu.Item
+                  name="Threads"
+                  onClick={handleItemClick}
+                  as={Link}
+                  active={activeItem === "Threads"}
+                  to="/threads"
+                />
+              </Menu.Menu>
+
+              <Menu.Menu position="right">
+                <Menu.Item
+                  name="Profile"
+                  onClick={handleItemClick}
+                  as={Link}
+                  active={activeItem === "Profile"}
+                  to="/profile"
+                />
+                <Menu.Item
+                  name="Logout"
+                  onClick={() => {
+                    logout();
+                  }}
+                />
+              </Menu.Menu>
+            </Menu>
+          </>
+        ) : (
+          <Menu pointing secondary size="massive" color="teal">
             <Menu.Item
+              name="home"
+              active={activeItem === "home"}
               onClick={handleItemClick}
-              name={user.name}
-              active={activeItem === user.name}
               as={Link}
               to="/"
             />
-            {/* <Menu.Item name="Users" as={Link} to="/users" /> */}
 
             <Menu.Menu position="right">
               <Menu.Item
-                name="Users"
-                onClick={handleItemClick}
-                active={activeItem === "Users"}
-                as={Link}
-                to="/users"
-              />
-              <Menu.Item
-                name="Threads"
+                name="login"
+                active={activeItem === "login"}
                 onClick={handleItemClick}
                 as={Link}
-                active={activeItem === "Threads"}
-                to="/threads"
+                to="/login"
               />
-            </Menu.Menu>
-
-            <Menu.Menu position="right">
               <Menu.Item
-                name="Profile"
+                name="register"
+                active={activeItem === "register"}
                 onClick={handleItemClick}
                 as={Link}
-                active={activeItem === "Profile"}
-                to="/profile"
-              />
-              <Menu.Item
-                name="Logout"
-                onClick={() => {
-                  logout();
-                }}
+                to="/register"
               />
             </Menu.Menu>
           </Menu>
-        </>
+        )
       ) : (
-        <Menu pointing secondary size="massive" color="teal">
-          <Menu.Item
-            name="home"
-            active={activeItem === "home"}
-            onClick={handleItemClick}
-            as={Link}
-            to="/"
-          />
-
-          <Menu.Menu position="right">
-            <Menu.Item
-              name="login"
-              active={activeItem === "login"}
-              onClick={handleItemClick}
-              as={Link}
-              to="/login"
-            />
-            <Menu.Item
-              name="register"
-              active={activeItem === "register"}
-              onClick={handleItemClick}
-              as={Link}
-              to="/register"
-            />
-          </Menu.Menu>
-        </Menu>
-      )
-    ) : (
-      <div style={{ marginBottom: "20px" }} />
-    );
-  return (
-    <>
-      {navBar}
+        <div style={{ marginBottom: "20px" }} />
+      )}
       {user && (
         <>
           <Transition.Group animation="fly left">

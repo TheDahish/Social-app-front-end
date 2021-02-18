@@ -36,7 +36,7 @@ export default function PostForm() {
   return (
     <>
       <Form onSubmit={onSubmit}>
-        <h1 style={{ marginLeft: "45px" }}>Create a Post</h1>
+        <h1 style={{ textAlign: "left", marginLeft: "30px" }}>Create a Post</h1>
         <Form.Group>
           <Form.Input
             placeholder="Connect me"

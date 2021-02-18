@@ -60,7 +60,7 @@ export default function Home(props) {
   if (data) {
     // console.log(data);
     posts = data.getFollowedPosts;
-    console.log(posts);
+    // console.log(posts);
     posts.sort(compare);
   }
 
