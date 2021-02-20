@@ -63,9 +63,8 @@ export default function Register(props) {
       variants={pageVariants}
       transition={pageTransition}
       exit="out"
-      className="formContainer"
+      className="formContainer login"
       style={{ position: "absolute", left: "31%" }}
-      className="formContainer"
     >
       <Container textAlign="center">
         <Form

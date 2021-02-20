@@ -66,7 +66,7 @@ export default function Profile(props) {
       variants={pageVariants}
       transition={pageTransition}
       exit="out"
-      className="formContainer"
+      className="formContainer profile"
       style={{
         position: "absolute",
         width: "100%",

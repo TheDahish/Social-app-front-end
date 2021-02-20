@@ -60,7 +60,7 @@ export default function Login(props) {
       variants={pageVariants}
       transition={pageTransition}
       exit="out"
-      className="formContainer"
+      className="formContainer login"
       style={{ position: "absolute", left: "31%" }}
     >
       <Form onSubmit={onSubmit} noValidate className={loading ? "loading" : ""}>
